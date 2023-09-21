@@ -30,7 +30,7 @@ async function search_images() {
     image.src = result.urls.small;
     image.alt = result.alt_description;
     const title = document.createElement("h2");
-    title.innerText = result.title;
+    title.innerText = input.value + " Images";
     const description = document.createElement("p");
     description.innerHTML = result.description;
     image_output.appendChild(image);
@@ -41,9 +41,10 @@ async function search_images() {
   // If the search query outputs more than 1 page of images, show the "Show More" button and increment the page number
   page_number++;
   if (page_number > 1) {
-    show_more.style.display("block");
+    show_more.classList.remove("hidden");
   }
 }
+// Event Listeners
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   search_images();
