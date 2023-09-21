@@ -102,5 +102,7 @@ form{
     color: white;
     border: none;
     border-radius: 5px;
-    display: none;
+}
+.hiden{
+    display:none;
 }
