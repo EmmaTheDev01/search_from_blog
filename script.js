@@ -4,45 +4,50 @@ const key = "tCXpW7zSLoeqev2-_XiTU9yBLpnEGlGibO0sgcNzfFA";
 const input = document.getElementById("search_input");
 const search = document.getElementById("btn");
 const output = document.getElementById("results");
-const show_more = documemt.getElementById("show_more");
+const show_more = document.getElementById("show_more");
 const form = document.getElementById("form");
 
 let input_query = "";
 let page_number = 1;
 
-//function to search images from API
+// Function to search images from API
 async function search_images() {
-  input_query = input.value;
-  let search_url = `https://api.unsplash.com/search/photos?page=${page_number}&query=${input_query}&client_id=${key}`;
-  //fetching data
+  const input_query = input.value;
+  const search_url = `https://api.unsplash.com/search/photos?page=${page_number}&query=${input_query}&client_id=${key}`;
+  // Fetching data
   const res = await fetch(search_url);
   const data = await res.json();
-  const result = data.results;
-  //Collecting data from API
-  if (page == 1) {
+  const results = data.results;
+  // Clearing output if page number is 1
+  if (page_number === 1) {
     output.innerHTML = "";
   }
-  //Displaying API data on the page
-  result.map((result) => {
-    const image_container = document.createElement("div");
-    image_container.classList.add("search_query");
+  // Displaying API data on the page
+  results.forEach((result) => {
+    const image_output = document.createElement("div");
+    image_output.classList.add("search_query");
     const image = document.createElement("img");
     image.src = result.urls.small;
     image.alt = result.alt_description;
-    image_container.appendChild(image);
+    const title = document.createElement("h2");
+    title.innerText = result.title;
+    const description = document.createElement("p");
+    description.innerHTML = result.description;
+    image_output.appendChild(image);
+    image_output.appendChild(title);
+    image_output.appendChild(description);
+    output.appendChild(image_output);
   });
-  //If the search query uotputs more than 1 page of images, show the show more and increment the page number
+  // If the search query outputs more than 1 page of images, show the "Show More" button and increment the page number
   page_number++;
   if (page_number > 1) {
-    show_more.classList.remove("hidden");
+    show_more.style.display("block");
   }
 }
-//Creating an event to search from a search form
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   search_images();
 });
-//Creating an event to show more
 show_more.addEventListener("click", (e) => {
   e.preventDefault();
   search_images();

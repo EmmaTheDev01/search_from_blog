@@ -102,7 +102,6 @@ form{
     color: white;
     border: none;
     border-radius: 5px;
-}
-.hiden{
-    display:none;
+    cursor: pointer;
+    display: none;
 }
